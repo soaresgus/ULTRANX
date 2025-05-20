@@ -6,7 +6,12 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
   return (
-    <button {...props} type="button">
+    <button
+      {...props}
+      className={`${
+        props.className ?? ''
+      } hover:cursor-pointer leading-none text-center flex items-center justify-center`}
+      type="button">
       {children}
     </button>
   );

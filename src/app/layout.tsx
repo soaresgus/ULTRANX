@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Italiana, Jomhuria } from 'next/font/google';
 import './globals.css';
+import Watermark from '@/components/Watermark';
 
 export const italianaFont = Italiana({
   variable: '--font-italiana',
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body
         className={`${italianaFont.variable} ${jomhuriaFont.variable} antialiased`}>
         {children}
+        <Watermark />
       </body>
     </html>
   );

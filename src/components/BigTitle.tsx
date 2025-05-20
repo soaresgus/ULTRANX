@@ -9,7 +9,7 @@ interface BigTitleProps {
 const BigTitle: React.FC<BigTitleProps> = ({ className = '' }) => (
   <div
     className={clsx(
-      'grid md:grid-cols-4 md:grid-rows-3 min lg:grid-rows-2 lg:grid-cols-3 items-center justify-center font-italiana',
+      'xl:grid sm:flex text-wrap grid-rows-3 row-span-3 items-center justify-center font-italiana',
       italianaFont.variable,
       className
     )}>
