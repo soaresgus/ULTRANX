@@ -1,16 +1,39 @@
-import React from 'react';
+'use client';
 
-const AccessKeyFields: React.FC = () => (
-  <div className="flex flex-col items-center justify-center w-full max-w-xl">
-    <h3 className="text-[82px] min-w-[242px] font-normal text-center font-jomhuria tracking-wider leading-none wrap-break-word">
-      Insira sua chave de acesso
-    </h3>
-    <input
-      type="text"
-      placeholder="Exp.: (email) ; (codigo)"
-      className="w-full h-[44px] bg-[var(--light-purple)] px-6 py-2 placeholder:text-gray-300 text-[40px] tracking-wider font-thin rounded-full placeholder:text-center opacity-100"
-    />
-  </div>
-);
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import AccessButton from './AccessButtons';
+import InputStyled from './Input';
+
+async function saveAccessKey(data: { accessKey: string }) {
+  console.log('Recebido no servidor:', data);
+}
+
+type AccessKeyForm = { accessKey: string };
+
+const AccessKeyFields: React.FC = () => {
+  const { register, handleSubmit } = useForm<AccessKeyForm>();
+
+  const onSubmit = async (data: { accessKey: string }) => {
+    await saveAccessKey(data); // Envia os dados para o servidor
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center w-full max-w-xl">
+      <h3 className="text-[82px] min-w-[242px] font-normal text-center font-jomhuria tracking-wider leading-none wrap-break-word">
+        Insira sua chave de acesso
+      </h3>
+      <form>
+        <InputStyled
+          {...register('accessKey')}
+          type="text"
+          placeholder="Exp.: (email) ; (codigo)"
+        />
+
+        <AccessButton onSubmit={handleSubmit(onSubmit)} />
+      </form>
+    </div>
+  );
+};
 
 export default AccessKeyFields;

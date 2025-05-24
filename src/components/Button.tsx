@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
       className={`${
         props.className ?? ''
       } hover:cursor-pointer leading-none text-center flex items-center justify-center`}
-      type="button">
+      type={props.type || 'button'}>
       {children}
     </button>
   );

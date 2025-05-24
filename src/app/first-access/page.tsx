@@ -1,17 +1,15 @@
-import AccessKeyFields from '@/components/AccessKeyFields';
 import BigTitle from '@/components/BigTitle';
+import GiveAccessFields from '@/components/GiveAccessFields';
 import WavyBackground from '@/components/WavyBackground';
 
-export default function Home() {
+export default function FirstAccess() {
   return (
     <main>
-      <WavyBackground className="flex min-h-screen items-center justify-center px-38">
+      <WavyBackground className="flex min-h-screen items-center justify-center gap-8">
         <BigTitle />
 
-        <div className="center-slide" />
-
         <section className="font-jomhuria">
-          <AccessKeyFields />
+          <GiveAccessFields />
         </section>
       </WavyBackground>
     </main>
