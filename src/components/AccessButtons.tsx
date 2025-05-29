@@ -9,8 +9,8 @@ type AccessButtonsProps = {
 const AccessButtons: React.FC<AccessButtonsProps> = ({ onSubmit }) => (
   <div className="flex gap-4 justify-between items-center w-full">
     <Button
-      className="uppercase text-8xl mt-[2.8%] "
-      type="button"
+      className="uppercase text-8xl mt-[2.8%] sign-in-text-shadow tracking-wider"
+      type="submit"
       onClick={onSubmit}>
       ENTRAR
     </Button>

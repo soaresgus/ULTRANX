@@ -105,6 +105,9 @@ body {
   animation: center-slide 0.35s ease-in forwards;
 }
 
-.text-shadow-purple {
-  text-shadow: 2px 4px 8px rgba(248, 29, 29, 0.7);
+.sign-in-text-shadow {
+  text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,
+    0 5px 0 #aaa, 0 6px 1px #221662, 0 0 5px #221662, 0 1px 3px #3e2293,
+    0 3px 5px #3e2293, 0 5px 10px #8059ce, 0 10px 10px #3e2293,
+    0 20px 20px #8059ce;
 }
