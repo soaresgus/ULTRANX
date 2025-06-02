@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import AccessButton from './AccessButtons';
 import InputStyled from './Input';
 import api from '@/lib/axios';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { EyeSlashIcon, EyeIcon } from '@phosphor-icons/react';
 
 type AccessKeyForm = { accessKey: string; password: string };
 
@@ -17,7 +18,7 @@ const AccessKeyFields: React.FC = () => {
     formState: { errors },
   } = useForm<AccessKeyForm>();
 
-  const [loginError, setLoginError] = React.useState<{
+  const [loginError, setLoginError] = useState<{
     active: boolean;
     message: string;
   }>({
@@ -25,11 +26,11 @@ const AccessKeyFields: React.FC = () => {
     message: '',
   });
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   async function analyzeData(
     data: AccessKeyForm
   ): Promise<{ success: boolean; data?: unknown; error?: unknown }> {
-    console.log('📩 Dados recebidos:', data);
-
     try {
       const response = await api.post('/auth/login', {
         email: data.accessKey,
@@ -37,11 +38,9 @@ const AccessKeyFields: React.FC = () => {
       });
 
       if (response.status === 200) {
-        console.log('✅ Login bem-sucedido:', response.data);
         setLoginError({ active: false, message: '' });
         return { success: true, data: response.data };
       } else {
-        console.warn('⚠️ Erro no login:', response.status, response.data);
         setLoginError({
           active: true,
           message: 'Erro ao fazer login. Verifique suas credenciais.',
@@ -49,15 +48,7 @@ const AccessKeyFields: React.FC = () => {
         return { success: false, error: response.data };
       }
     } catch (error) {
-      console.error('❌ Erro na requisição:', error);
-
       if (error instanceof AxiosError && error.response) {
-        // Erro retornado pelo servidor (status 4xx, 5xx)
-        console.warn(
-          '⚠️ Erro no login:',
-          error.response.status,
-          error.response.data
-        );
         setLoginError({
           active: true,
           // Se a API enviar uma mensagem específica dentro de response.data, exiba-a:
@@ -73,10 +64,6 @@ const AccessKeyFields: React.FC = () => {
         'request' in error
       ) {
         // A requisição foi feita, mas não houve resposta (servidor offline, CORS, timeout etc)
-        console.error(
-          '🚫 Sem resposta do servidor:',
-          (error as { request: unknown }).request
-        );
         setLoginError({
           active: true,
           message: 'Servidor não respondeu. Verifique a conexão.',
@@ -91,10 +78,6 @@ const AccessKeyFields: React.FC = () => {
         'message' in error
       ) {
         // Algum outro erro inesperado (padrão do JavaScript ou do Axios sem response/request)
-        console.error(
-          '⚡ Erro inesperado:',
-          (error as { message: string }).message
-        );
         setLoginError({
           active: true,
           message: (error as { message: string }).message,
@@ -105,7 +88,6 @@ const AccessKeyFields: React.FC = () => {
         };
       } else {
         // Último caso: não conseguimos identificar o tipo
-        console.error('⚡ Erro desconhecido:', error);
         setLoginError({
           active: true,
           message: 'Erro desconhecido. Tente novamente mais tarde.',
@@ -128,9 +110,6 @@ const AccessKeyFields: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-xl">
-      <h3 className="text-[82px] min-w-[242px] font-normal text-center font-jomhuria tracking-wider leading-none wrap-break-word">
-        Insira seu endereço de e-mail
-      </h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center w-full gap-4">
@@ -153,14 +132,25 @@ const AccessKeyFields: React.FC = () => {
           )}
         </fieldset>
 
-        <fieldset className="flex flex-col items-center justify-center w-full gap-2">
+        <fieldset className="flex items-center justify-center w-full gap-2 bg-[var(--light-purple)] px-6 rounded-full focus-within:outline">
           <InputStyled
             {...register('password', {
               required: 'A senha é obrigatória.',
             })}
-            type="password"
+            type={isPasswordVisible ? 'text' : 'password'}
             placeholder="Digite sua senha"
+            customClassName="w-full h-[44px] placeholder:text-gray-300 text-[40px] tracking-wider font-thin placeholder:text-center opacity-100 outline-none"
           />
+          <button
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            type="button"
+            className="cursor-pointer">
+            {isPasswordVisible ? (
+              <EyeIcon size={24} />
+            ) : (
+              <EyeSlashIcon size={24} />
+            )}
+          </button>
         </fieldset>
 
         {loginError.active && (

@@ -111,3 +111,10 @@ body {
     0 3px 5px #3e2293, 0 5px 10px #8059ce, 0 10px 10px #3e2293,
     0 20px 20px #8059ce;
 }
+
+input[type='password']::-ms-reveal,
+input[type='password']::-webkit-reveal {
+  display: none;
+}
+
+@tailwind utilities;
