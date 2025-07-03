@@ -1,6 +1,7 @@
 import BigTitle from '@/components/BigTitle';
 import WavyBackground from '@/components/WavyBackground';
 import { italianaFont, jomhuriaFont } from '../layout';
+import Watermark from '@/components/Watermark';
 
 export default function AuthLayout({
   children,
@@ -18,6 +19,7 @@ export default function AuthLayout({
 
           <section className="font-jomhuria min-w-xl">{children}</section>
         </WavyBackground>
+        <Watermark />
       </body>
     </html>
   );

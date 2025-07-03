@@ -6,6 +6,7 @@ import ForgotPasswordCodeForm from './ForgotPasswordCodeForm';
 import ForgotPasswordForm from './ForgotPasswordForm';
 import ResetPasswordForm from './ResetPasswordForm';
 import api from '@/lib/axios';
+import { toast } from 'sonner';
 
 const ForgotPasswordFields: React.FC = () => {
   const [codeWasSent, setCodeWasSent] = useState(false);
@@ -31,6 +32,7 @@ const ForgotPasswordFields: React.FC = () => {
       setIsLoading(false);
 
       router.push('/');
+      toast.success('Senha redefinida com sucesso!');
     } catch {
       setErrorMessage('Erro ao redefinir a senha. Tente novamente mais tarde.')
       throw new Error('Erro ao redefinir a senha. Tente novamente mais tarde.');

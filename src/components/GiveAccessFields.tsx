@@ -5,6 +5,7 @@ import GiveAccessForm from './GiveAccessForm';
 import GiveAccessCodeForm from './GiveAccessCodeForm';
 import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const GiveAccessFields: React.FC = () => {
   const [codeWasSent, setCodeWasSent] = useState(false);
@@ -27,6 +28,7 @@ const GiveAccessFields: React.FC = () => {
       });
 
       router.push('/');
+      toast.success('Conta criada com sucesso!');
     } catch {
       throw new Error('Erro ao criar a conta. Tente novamente mais tarde.');
     } finally {
